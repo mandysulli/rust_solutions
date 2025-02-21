@@ -43,4 +43,27 @@ fn main() {
             
         }
     }
+    //check that sequence conversion works
+    //println!("{:?}", seq);
+
+    //Inialize vecotr for holding gc content
+    let mut gc: Vec<f32> = Vec::new();
+    //Iterate through seqeunces and count the occurance of G and C
+    //Then divide that by the length of the sequence
+    for i_seq in seq {
+        let mut gc_counter = 0;
+        let seq_length=i_seq.len();
+        for j in i_seq.chars() {
+            if j == 'G'{
+                gc_counter += 1;
+            } else if j == 'C' {
+                gc_counter += 1;
+            }
+        }
+        let mut gc_content: f32= gc_counter as f32/seq_length as f32;
+        gc.push(gc_content)
+        
+    }
+    //check that the gc values are storing correctly
+    //println!("{:?}", gc);
 }
