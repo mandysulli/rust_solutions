@@ -15,7 +15,7 @@ fn main() {
     // Initialize rev comp string to add new to add characters back to
     let mut rc = String::new();
     //Initialize bad_nuc for error tracking
-    let mut bad_nuc = 0;
+    let bad_nuc = 0;
 
     //Iterate through char vector in the reverse order
     //Add opposite nucleotide to the rc string than one found in char vec

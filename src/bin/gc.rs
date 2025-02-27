@@ -1,6 +1,5 @@
 use std::env;
 use std::fs;
-use std::mem::replace;
 
 fn main() {
     //read in fasta file
@@ -58,7 +57,7 @@ fn main() {
                 gc_counter += 1;
             }
         }
-        let mut gc_content: f32 = gc_counter as f32 / seq_length as f32;
+        let gc_content: f32 = gc_counter as f32 / seq_length as f32;
         gc.push(gc_content)
     }
     //check that the gc values are storing correctly
