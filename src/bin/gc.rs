@@ -13,9 +13,9 @@ fn main() {
     let mut seq: Vec<String> = Vec::new();
 
     //Initialize counters and elemnet to hold sequences
-    let mut header_counter: i32 = 0;
-    let mut seq_counter: i32 = 0;
-    let mut hold_seq: String = "".to_string();
+    let mut header_counter = 0;
+    let mut seq_counter = 0;
+    let mut hold_seq = String::new();
     //Iterate through lines in contents
     for line in contents.lines() {
         //If line starts with '>' save to header vec and the increase counter
@@ -35,8 +35,8 @@ fn main() {
             } else if seq_counter == header_counter {
                 let position: usize = (seq_counter - 1).try_into().unwrap();
                 hold_seq.push_str(line);
-                //It doesn't liek the way I use this but it lets it slide...
-                std::mem::replace(&mut seq[position], hold_seq.clone());
+
+                seq[position] = hold_seq.clone();
             }
         }
     }
@@ -51,9 +51,8 @@ fn main() {
         let mut gc_counter = 0;
         let seq_length = i_seq.len();
         for j in i_seq.chars() {
-            if j == 'G' {
-                gc_counter += 1;
-            } else if j == 'C' {
+            // See also: matches!(j, 'G' | 'C') {
+            if j == 'G' || j == 'C' {
                 gc_counter += 1;
             }
         }
@@ -72,7 +71,7 @@ fn main() {
     //and store associated header in hold name
     for i in gc {
         if i > hold_gc {
-            hold_gc = i.clone();
+            hold_gc = i;
             hold_name = header.get(index).unwrap();
         } else {
             continue;
