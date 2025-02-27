@@ -16,6 +16,8 @@ fn main() {
     let mut header_counter = 0;
     let mut seq_counter = 0;
     let mut hold_seq = String::new();
+
+    // Challenge: rewrite without two counters
     //Iterate through lines in contents
     for line in contents.lines() {
         //If line starts with '>' save to header vec and the increase counter
@@ -48,40 +50,45 @@ fn main() {
     //Iterate through seqeunces and count the occurance of G and C
     //Then divide that by the length of the sequence
     for i_seq in seq {
-        let mut gc_counter = 0;
-        let seq_length = i_seq.len();
-        for j in i_seq.chars() {
-            // See also: matches!(j, 'G' | 'C') {
-            if j == 'G' || j == 'C' {
-                gc_counter += 1;
-            }
-        }
-        let gc_content: f32 = gc_counter as f32 / seq_length as f32;
-        gc.push(gc_content)
+        gc.push(gc_content(&i_seq))
     }
     //check that the gc values are storing correctly
     //println!("{:?}", gc);
 
     //Inialize elemnets to hold the highest gc content and the header associated with highest gc content
-    let mut hold_gc: f32 = 0.0;
-    let mut hold_name = &String::new();
-    let mut index = 0;
+    let mut max_gc: f32 = 0.0;
+    let mut max_gc_header = "";
+
     //Interate through the gc contents stored in gc vector
     //when the a value is higher than the gc value being held in hold gc, store new value in hold_gc
     //and store associated header in hold name
-    for i in gc {
-        if i > hold_gc {
-            hold_gc = i;
-            hold_name = header.get(index).unwrap();
-        } else {
-            continue;
+    for (i, gc) in gc.iter().enumerate() {
+        if *gc > max_gc {
+            max_gc = *gc;
+            max_gc_header = header[i].as_str();
         }
-        index += 1;
     }
 
-    //Convert outputs to specified format and print
-    let final_name = hold_name.replace(">", "");
-    let final_gc = hold_gc * 100.0;
-    println!("{}", final_name);
-    println!("{}", final_gc);
+    println!("{final_name}", final_name = max_gc_header.replace(">", ""));
+
+    let final_gc = max_gc * 100.0;
+    println!("{final_gc}");
+}
+
+fn gc_content(seq: &str) -> f32 {
+    let mut gc_counter = 0;
+
+    for j in seq.chars() {
+        if j == 'G' || j == 'C' {
+            gc_counter += 1;
+        }
+    }
+    gc_counter as f32 / seq.len() as f32
+}
+
+fn _gc_content2(seq: &str) -> f32 {
+    seq.chars()
+        .filter(|base| *base == 'G' || *base == 'C')
+        .count() as f32
+        / seq.len() as f32
 }
