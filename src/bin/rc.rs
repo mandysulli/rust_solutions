@@ -1,37 +1,25 @@
 use std::io;
 
 fn main() {
-    let mut my_string = String::new();
+    let mut forward = String::new();
 
     //read in argument
     println!("Enter your DNA sequence below:");
     io::stdin()
-        .read_line(&mut my_string)
+        .read_line(&mut forward)
         .expect("Failed to read line");
 
-    //Make input uppercase incase user does not use upper case
-    let chars: Vec<char> = my_string.to_uppercase().chars().collect();
+    let revcomp: String = forward.trim_end().chars().rev().map(complement).collect();
 
-    // Initialize rev comp string to add new to add characters back to
-    let mut rc = String::new();
-
-    //Iterate through char vector in the reverse order
-    //Add opposite nucleotide to the rc string than one found in char vec
-    for i in (0..chars.len()).rev() {
-        if chars[i] == 'A' {
-            rc.push('T');
-        } else if chars[i] == 'C' {
-            rc.push('G');
-        } else if chars[i] == 'G' {
-            rc.push('C');
-        } else if chars[i] == 'T' {
-            rc.push('A');
-        }
-    }
-
-    println!("The reverse compliment sequence is:");
-    println!("{}", rc);
+    println!("The reverse compliment sequence is:\n{revcomp}");
 }
 
-//wanted to add error handling, but it went off the rails
-//Ask Sam about it if can't figure out later
+fn complement(base: char) -> char {
+    match base.to_ascii_uppercase() {
+        'A' => 'T',
+        'C' => 'G',
+        'G' => 'C',
+        'T' => 'A',
+        _ => base,
+    }
+}
