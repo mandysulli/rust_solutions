@@ -3,37 +3,33 @@ use std::io;
 fn main() {
     let mut my_string = String::new();
 
-    //read in argument
+    // TODO: IF an argument is provided, read from that, otherwise read from the
+    // stdin like below.
     println!("Enter your DNA sequence below:");
     io::stdin()
         .read_line(&mut my_string)
         .expect("Failed to read line");
 
-    //Make input uppercase incase user does not use upper case when converting into vec of char
-    let chars: Vec<char> = my_string.to_uppercase().chars().collect();
+    my_string.make_ascii_uppercase();
 
-    // initialize variables for counting
     let mut a_count = 0;
     let mut c_count = 0;
     let mut g_count = 0;
     let mut t_count = 0;
-    let mut index = 0;
 
-    //while loop to count A,C,G,T's present in character vector
-    while index < chars.len() {
-        if chars[index] == 'A' {
+    for base in my_string.chars() {
+        if base == 'A' {
             a_count += 1
-        } else if chars[index] == 'C' {
+        } else if base == 'C' {
             c_count += 1
-        } else if chars[index] == 'G' {
+        } else if base == 'G' {
             g_count += 1
-        } else if chars[index] == 'T' {
+        } else if base == 'T' {
             t_count += 1
         }
-        index += 1;
     }
 
-    //I'm sorry but I altrered the output from what Rosiland specificeied
-    //Who wouldn't want to know the nucleotide associated with the sum?
-    println!("A:{} C:{} G:{} T:{}", a_count, c_count, g_count, t_count);
+    // I'm sorry but I altered the output from what Rosiland specificeied. Who
+    // wouldn't want to know the nucleotide associated with the sum?
+    println!("A:{a_count} C:{c_count} G:{g_count} T:{t_count}");
 }
