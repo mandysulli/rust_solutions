@@ -1,37 +1,49 @@
 use std::io;
 
 fn main() {
-    let mut my_string = String::new();
+    let mut dna = String::new();
 
     //read in argument
     println!("Enter your DNA sequence below:");
     io::stdin()
-        .read_line(&mut my_string)
+        .read_line(&mut dna)
         .expect("Failed to read line");
 
-    //Make input uppercase incase user does not use upper case
-    let chars: Vec<char> = my_string.to_uppercase().chars().collect();
+    // This is a puzzle, so assume uppercase
 
-    // Initialize index for iterating
-    let mut index = 0;
-    // Initialize rna string to add new to add characters back to
-    // need to get characters back to string to print in a normal way
-    let mut rna = String::new();
+    let rna: String = dna
+        .chars()
+        .map(|base| if base == 'T' { 'U' } else { base })
+        .collect();
 
-    //Iterate through char vector and add A,C&G to string when found. If T found add U to string
-    while index < chars.len() {
-        if chars[index] == 'A' {
-            rna.push('A');
-        } else if chars[index] == 'C' {
-            rna.push('C');
-        } else if chars[index] == 'G' {
-            rna.push('G');
-        } else if chars[index] == 'T' {
-            rna.push('U');
+    //let rna = dna.replace("T", "U");
+
+    /*
+    // Moves DNA out. Now it is a Vec.
+    let mut rna = dna.into_bytes();
+    for base in rna.iter_mut() {
+        if *base == b'T' {
+            *base = b'U';
         }
-        index += 1;
     }
+    */
 
-    println!("Your RNA sequence is:");
-    println!("{}", rna);
+    /*
+    unsafe {
+        for base in dna.as_bytes_mut() {
+            if *base == b'T' {
+                *base = b'U';
+            }
+        }
+    }
+    let rna = dna;
+     */
+
+    println!("Your RNA sequence is: {rna}");
+    /*
+    println!(
+        "Your RNA sequence is: {rna}",
+        rna = String::from_utf8_lossy(&rna)
+    );
+    */
 }
