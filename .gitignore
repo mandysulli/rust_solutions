@@ -3,6 +3,8 @@
 debug/
 target/
 *.lock
+*.exe
+test*
 
 # Added by cargo
 
