@@ -1,10 +1,12 @@
 use std::io;
 
+// CHALLENGE: Compare benchmarks for a larger number (reasonable) of recursive vs iteration.
+// Optional: does Rust tail call optimize this if you rewrite it in some way? Search the web!
 fn fibo(n1: i64, n2: i64) -> i64 {
     if n1 > 2 {
-        return fibo(n1 - 2, n2) * n2 + fibo(n1 - 1, n2);
+        fibo(n1 - 2, n2) * n2 + fibo(n1 - 1, n2)
     } else {
-        return 1;
+        1
     }
 }
 
